@@ -1,0 +1,25 @@
+﻿version : '3'
+services:
+    ACMECustomerAPI:
+        image: acmecorpcustomerservice
+        restart: always
+        build:
+            dockerfile : Dockerfile
+        ports:
+            - "3500:80"
+    ACMECustomerDB:
+        image: "mcr.microsoft.com/mssql/server:2019-latest"
+        container_name: ACMECustomerDB
+        restart: always
+        build:
+            dockerfile: Dockerfile
+        environment:
+            SA_USERNAME: "SA"
+            SA_PASSWORD: "#Admin123"
+            ACCEPT_EULA: "Y"
+        volumes:
+            - database-data:/var/opt/mssql
+        ports:
+            - "1440:1433"
+volumes:
+    database-data:
